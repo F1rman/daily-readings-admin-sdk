@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../helpers/slide_right_route.dart';
-import '../services/auth.dart';
+import '../services/auth_old.dart';
 import 'home.dart';
 import 'register.dart';
 
@@ -35,7 +35,7 @@ class StatefulLoginWidget extends StatefulWidget {
 class _StatefulLoginWidget extends State<StatefulLoginWidget> {
   _StatefulLoginWidget({required this.errMsg});
   final String errMsg;
-  final AuthService authService = AuthService();
+  // final AuthService authService = AuthService();
   final storage = const FlutterSecureStorage();
   final _loginFormKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
@@ -229,29 +229,29 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                           _loginFormKey.currentState!.save();
                           EasyLoading.show();
     print('ressss }');
-                          var res = await authService.login(
-                              _emailController.text, _passwordController.text);
-                          switch (res!.statusCode) {
-                            case 200:
-                              EasyLoading.dismiss();
-                              var data = jsonDecode(res.body);
-                              storage.write(key: "token", value: data['token']);
+                          // var res = await authService.login(
+                          //     _emailController.text, _passwordController.text);
+                          // switch (res!.statusCode) {
+                          //   case 200:
+                          //     EasyLoading.dismiss();
+                          //     var data = jsonDecode(res.body);
+                          //     storage.write(key: "token", value: data['token']);
                               Navigator.pushReplacement(
                                   context, SlideRightRoute(page: const HomeScreen(errMsg: '',)));
-                              break;
-                            case 401:
+                          //     break;
+                          //   case 401:
                               EasyLoading.dismiss();
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content: Text("Wrong email or password!"),
-                              ));
-                              break;
-                            default:
-                              EasyLoading.dismiss();
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content: Text("Wrong email or password!"),
-                              ));
-                              break;
-                          }
+                          //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          //       content: Text("Wrong email or password!"),
+                          //     ));
+                          //     break;
+                          //   default:
+                          //     EasyLoading.dismiss();
+                          //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          //       content: Text("Wrong email or password!"),
+                          //     ));
+                          //     break;
+                          // }
                         }
                       }
                     },
