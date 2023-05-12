@@ -228,9 +228,9 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                         if (_loginFormKey.currentState!.validate()) {
                           _loginFormKey.currentState!.save();
                           EasyLoading.show();
+    print('ressss }');
                           var res = await authService.login(
                               _emailController.text, _passwordController.text);
-
                           switch (res!.statusCode) {
                             case 200:
                               EasyLoading.dismiss();
