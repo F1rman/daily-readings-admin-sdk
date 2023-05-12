@@ -8,19 +8,14 @@ import '../controllers/global_controller.dart';
 import 'auth.dart';
 import 'firebase_options.dart';
 
-
 class Initializer {
   static Future<void> init() async {
     try {
       WidgetsFlutterBinding.ensureInitialized();
-
-      // await _initStorage();
-      await Firebase.initializeApp(
-          name: "Daily Readings Admin Panel", options: options);
+     
 
       _initScreenPreference();
       _initApis();
-
     } catch (err) {
       rethrow;
     }

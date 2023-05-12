@@ -23,6 +23,7 @@ class FirestoreController extends GetxController {
   @override
   void onInit() {
     uid = injectedUID;
+    print('tesssss $uid');
     initData();
     listenUser();
     super.onInit();
