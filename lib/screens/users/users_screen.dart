@@ -1,16 +1,12 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daily_readings_admin_sdk/models/users.dart';
 import 'package:daily_readings_admin_sdk/screens/users/user_details_screen.dart';
 import 'package:daily_readings_admin_sdk/services/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import '../../helpers/slide_right_route.dart';
 import '../../models/user/user_model.dart';
-import '../../services/api_service.dart';
 import 'add_user_screen.dart';
 import '../home/home.dart';
 
@@ -38,7 +34,6 @@ class _StatefulUsersWidget extends State<StatefulUsersWidget> {
   _StatefulUsersWidget({required this.errMsg});
 
   final String errMsg;
-  final ApiService api = ApiService();
   late List<UserModel> users = [];
   FirestoreController firestore = Get.find();
 
@@ -140,7 +135,7 @@ class _StatefulUsersWidget extends State<StatefulUsersWidget> {
               MaterialPageRoute(builder: (context) => const AddUserScreen()));
         },
         tooltip: 'Increment',
-        backgroundColor: Color.fromARGB(255, 46, 11, 246),
+        backgroundColor: const Color.fromARGB(255, 46, 11, 246),
         child: const Icon(Icons.add),
       ),
     );

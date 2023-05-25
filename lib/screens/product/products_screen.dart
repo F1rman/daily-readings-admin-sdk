@@ -1,15 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:http/http.dart';
 import '../../helpers/slide_right_route.dart';
 import '../../models/products.dart';
-import '../../services/api_service.dart';
-import '../../widgets/product_list_widget.dart';
 import 'add_product_screen.dart';
 import '../home/home.dart';
-import '../login.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key, required this.errMsg}) : super(key: key);
@@ -38,7 +32,7 @@ class StatefulProductsWidget extends StatefulWidget {
 class _StatefulProductsWidget extends State<StatefulProductsWidget> {
   _StatefulProductsWidget({required this.errMsg});
   final String errMsg;
-  final ApiService api = ApiService();
+  // final ApiService api = ApiService();
   late List<Products> products = [];
 
   @override
@@ -54,10 +48,10 @@ class _StatefulProductsWidget extends State<StatefulProductsWidget> {
     }
   }
 
-  Future<Response> get listProducts async {
-    // EasyLoading.show();
-    return await api.getProductList();
-  }
+  // Future<Response> get listProducts async {
+  //   // EasyLoading.show();
+  //   // return await api.getProductList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -87,74 +81,74 @@ class _StatefulProductsWidget extends State<StatefulProductsWidget> {
               ))),
         ),
       ),
-      body: Center(
-        child: FutureBuilder(
-          future: listProducts,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              Response resp = snapshot.data as Response;
-              if (resp.statusCode == 200) {
-                EasyLoading.dismiss();
-                final jsonMap = json.decode(resp.body);
-                products = (jsonMap as List)
-                    .map((prodItem) => Products.fromJson(prodItem))
-                    .toList();
-                return products.isNotEmpty
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        child: ProductListWidget(products: products),
-                      )
-                    : const Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20.0),
-                          child: Text(
-                            'No products found',
-                            overflow: TextOverflow.visible,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              height: 1.171875,
-                              fontSize: 24.0,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w300,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                        ),
-                      );
-              } else if (resp.statusCode == 401) {
-                EasyLoading.dismiss();
-                Future.delayed(Duration.zero, () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen(
-                                errMsg: 'Unauthenticated',
-                              )));
-                });
-              } else if (resp.statusCode == 403) {
-                EasyLoading.dismiss();
-                Future.delayed(Duration.zero, () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen(
-                                errMsg: 'Permission Denied',
-                              )));
-                });
-              }
-            } else if (snapshot.hasError) {
-              EasyLoading.dismiss();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text('${snapshot.error}'),
-              ));
-            }
-            return const Center(
-              child: Text(''''''),
-            );
-          },
-        ),
+      body: const Center(
+        // child: FutureBuilder(
+        //   future: listProducts,
+        //   builder: (context, snapshot) {
+        //     if (snapshot.hasData) {
+        //       Response resp = snapshot.data as Response;
+        //       if (resp.statusCode == 200) {
+        //         EasyLoading.dismiss();
+        //         final jsonMap = json.decode(resp.body);
+        //         products = (jsonMap as List)
+        //             .map((prodItem) => Products.fromJson(prodItem))
+        //             .toList();
+        //         return products.isNotEmpty
+        //             ? Padding(
+        //                 padding: const EdgeInsets.symmetric(
+        //                     vertical: 10.0, horizontal: 10.0),
+        //                 child: ProductListWidget(products: products),
+        //               )
+        //             : const Center(
+        //                 child: Padding(
+        //                   padding: EdgeInsets.symmetric(
+        //                       vertical: 10.0, horizontal: 20.0),
+        //                   child: Text(
+        //                     'No products found',
+        //                     overflow: TextOverflow.visible,
+        //                     textAlign: TextAlign.center,
+        //                     style: TextStyle(
+        //                       height: 1.171875,
+        //                       fontSize: 24.0,
+        //                       fontFamily: 'Roboto',
+        //                       fontWeight: FontWeight.w300,
+        //                       color: Color.fromARGB(255, 255, 255, 255),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               );
+        //       } else if (resp.statusCode == 401) {
+        //         EasyLoading.dismiss();
+        //         Future.delayed(Duration.zero, () {
+        //           Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) => const LoginScreen(
+        //                         errMsg: 'Unauthenticated',
+        //                       )));
+        //         });
+        //       } else if (resp.statusCode == 403) {
+        //         EasyLoading.dismiss();
+        //         Future.delayed(Duration.zero, () {
+        //           Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) => const HomeScreen(
+        //                         errMsg: 'Permission Denied',
+        //                       )));
+        //         });
+        //       }
+        //     } else if (snapshot.hasError) {
+        //       EasyLoading.dismiss();
+        //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //         content: Text('${snapshot.error}'),
+        //       ));
+        //     }
+        //     return const Center(
+        //       child: Text(''''''),
+        //     );
+        //   },
+        // ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

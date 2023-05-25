@@ -1,3 +1,4 @@
+import 'package:daily_readings_admin_sdk/helpers/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      theme: AppTheme.theme,
     );
   }
 }

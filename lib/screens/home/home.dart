@@ -8,7 +8,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/slide_right_route.dart';
-import '../login.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key, required this.errMsg}) : super(key: key);
@@ -224,7 +223,7 @@ class _StatefulHomeWidget extends State<StatefulHomeWidget> {
                     '$key: ${firestore.userDataModel.value.toJson()[key]}',
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.visible,
-                    style: TextStyle(
+                    style: const TextStyle(
                       height: 1.171875,
                       fontSize: 18.0,
                       fontFamily: 'Roboto',
