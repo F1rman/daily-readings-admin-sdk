@@ -1,4 +1,3 @@
-import 'package:daily_readings_admin_sdk/screens/dashboard/dashboard_screen.dart';
 import 'package:daily_readings_admin_sdk/screens/login.dart';
 import 'package:daily_readings_admin_sdk/screens/main/main_screen.dart';
 import 'package:daily_readings_admin_sdk/screens/users/users_screen.dart';
@@ -9,6 +8,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
+  // ignore: constant_identifier_names
   static const INITIAL = Routes.LOGIN;
 
   static final routes = [

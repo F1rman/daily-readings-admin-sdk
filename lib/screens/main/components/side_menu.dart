@@ -1,63 +1,76 @@
+import 'package:daily_readings_admin_sdk/controllers/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
     Key? key,
   }) : super(key: key);
+  static GlobalController globalController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      
-      child: ListView(
+        child: Obx(
+      () => ListView(
         children: [
           DrawerHeader(
             child: Image.asset("../public/assets/images/logo.png"),
           ),
           DrawerListTile(
-            title: "Dashboard",
-            svgSrc: "../public/assets/icons/menu_dashboard.svg",
-            press: () {},
+            active: globalController.selectedIndex.value == 0,
+            title: "Home",
+            press: () {
+              globalController.selectedIndex.value = 0;
+            },
+          ),
+          DrawerListTile(
+            active: globalController.selectedIndex.value == 1,
+            title: "Users",
+            icon: Icons.people,
+            press: () {
+              globalController.selectedIndex.value = 1;
+            },
           ),
           DrawerListTile(
             title: "Transaction",
-            svgSrc: "../public/assets/icons/menu_tran.svg",
+            icon: Icons.attach_money,
             press: () {},
           ),
           DrawerListTile(
             title: "Task",
-            svgSrc: "../public/assets/icons/menu_task.svg",
+            icon: Icons.task,
             press: () {},
           ),
           DrawerListTile(
             title: "Documents",
-            svgSrc: "../public/assets/icons/menu_doc.svg",
+            icon: Icons.file_copy,
             press: () {},
           ),
           DrawerListTile(
             title: "Store",
-            svgSrc: "../public/assets/icons/menu_store.svg",
+            icon: Icons.store,
             press: () {},
           ),
           DrawerListTile(
             title: "Notification",
-            svgSrc: "../public/assets/icons/menu_notification.svg",
+            icon: Icons.notifications,
             press: () {},
           ),
           DrawerListTile(
             title: "Profile",
-            svgSrc: "../public/assets/icons/menu_profile.svg",
+            icon: Icons.person,
             press: () {},
           ),
           DrawerListTile(
             title: "Settings",
-            svgSrc: "../public/assets/icons/menu_setting.svg",
+            icon: Icons.settings,
             press: () {},
           ),
         ],
       ),
-    );
+    ));
   }
 }
 
@@ -66,26 +79,31 @@ class DrawerListTile extends StatelessWidget {
     Key? key,
     // For selecting those three line once press "Command+D"
     required this.title,
-    required this.svgSrc,
+     this.icon,
     required this.press,
+    this.active = false,
   }) : super(key: key);
+  static GlobalController globalController = Get.find();
 
-  final String title, svgSrc;
+  final String title;
+  final IconData? icon;
   final VoidCallback press;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: press,
       horizontalTitleGap: 0.0,
-      leading: SvgPicture.asset(
-        svgSrc,
-        colorFilter: const ColorFilter.mode(Colors.white54, BlendMode.srcIn),
-        height: 16,
+      leading: Icon(
+        icon??Icons.home,
+        color:active ? Colors.white : Colors.white30,
       ),
       title: Text(
         title,
-        style: const TextStyle(color: Colors.white54),
+        style: TextStyle(
+            color: Colors.white54,
+            fontWeight: active ? FontWeight.bold : FontWeight.normal),
       ),
     );
   }
