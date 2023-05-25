@@ -1,53 +1,36 @@
 import 'dart:convert';
 
-import 'package:daily_readings_admin_sdk/screens/product_details_screen.dart';
-import 'package:daily_readings_admin_sdk/screens/products_screen.dart';
+import 'package:daily_readings_admin_sdk/screens/product/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import '../helpers/slide_right_route.dart';
-import '../models/products.dart';
-import '../services/api_service.dart';
+import '../../helpers/slide_right_route.dart';
+import '../../services/api_service.dart';
 
-class EditProductScreen extends StatelessWidget {
-  const EditProductScreen({Key? key, required this.products}) : super(key: key);
-  final Products products;
-  static const String _title = 'Edit Product';
+class AddProductScreen extends StatelessWidget {
+  const AddProductScreen({Key? key}) : super(key: key);
+  static const String _title = 'Add Product';
 
   @override
   Widget build(BuildContext context) {
-    return StatefulEditProductWidget(products: products);
+    return StatefulAddProductWidget();
   }
 }
 
-class StatefulEditProductWidget extends StatefulWidget {
-  const StatefulEditProductWidget({Key? key, required this.products})
-      : super(key: key);
-  final Products products;
+class StatefulAddProductWidget extends StatefulWidget {
+  const StatefulAddProductWidget({Key? key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  _EditProductWidgetState createState() =>
-      _EditProductWidgetState(products: products);
+  _AddProductWidgetState createState() => _AddProductWidgetState();
 }
 
-class _EditProductWidgetState extends State<StatefulEditProductWidget> {
-  _EditProductWidgetState({required this.products});
-  final Products products;
+class _AddProductWidgetState extends State<StatefulAddProductWidget> {
   final ApiService api = ApiService();
-  final _editProductFormKey = GlobalKey<FormState>();
+  final _addProductFormKey = GlobalKey<FormState>();
   final _productNameController = TextEditingController();
   final _productDescriptionController = TextEditingController();
   final _productImageController = TextEditingController();
   final _productPriceController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _productNameController.text = products.prodName.toString();
-    _productDescriptionController.text = products.prodDescription.toString();
-    _productImageController.text = products.prodImage.toString();
-    _productPriceController.text = products.prodPrice.toString();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +39,7 @@ class _EditProductWidgetState extends State<StatefulEditProductWidget> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 26, 255, 1)),
         title: const Text(
-          'Edit Product',
+          'Add Product',
           style: TextStyle(
             height: 1.171875,
             fontSize: 18.0,
@@ -69,19 +52,19 @@ class _EditProductWidgetState extends State<StatefulEditProductWidget> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 26, 255, 1)),
-          onPressed: () => Navigator.pushReplacement(context,
-              SlideRightRoute(page: ProductDetailsScreen(products: products))),
+          onPressed: () => Navigator.pushReplacement(
+              context, SlideRightRoute(page: const ProductsScreen(errMsg: ''))),
         ),
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: _editProductFormKey,
+          key: _addProductFormKey,
           child: Column(
             children: [
               const Padding(
                 padding: EdgeInsets.fromLTRB(15, 80, 15, 20),
                 child: Text(
-                  'Please edit your product name, description, image, and price',
+                  'Please fill your product name, description, image, and price',
                   overflow: TextOverflow.visible,
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -325,7 +308,7 @@ class _EditProductWidgetState extends State<StatefulEditProductWidget> {
                   width: MediaQuery.of(context).size.width * 1.0,
                   child: ElevatedButton.icon(
                     icon: const Icon(
-                      Icons.login,
+                      Icons.save,
                       color: Color.fromARGB(255, 0, 0, 0),
                       size: 24.0,
                     ),
@@ -341,30 +324,29 @@ class _EditProductWidgetState extends State<StatefulEditProductWidget> {
                           const Color.fromARGB(255, 255, 200, 0)),
                     ),
                     onPressed: () async {
-                      if (_editProductFormKey.currentState!.validate()) {
-                        _editProductFormKey.currentState!.save();
+                      if (_addProductFormKey.currentState!.validate()) {
+                        _addProductFormKey.currentState!.save();
                         EasyLoading.show();
-                        var res = await api.updateProduct(
-                            products.id,
+                        var res = await api.addProduct(
                             _productNameController.text,
                             _productDescriptionController.text,
                             _productImageController.text,
                             _productPriceController.text);
 
                         switch (res.statusCode) {
-                          case 200:
+                          case 201:
                             EasyLoading.dismiss();
                             Navigator.pushReplacement(
                                 context,
                                 SlideRightRoute(
                                     page: const ProductsScreen(
-                                  errMsg: 'Updated Successfully',
+                                  errMsg: 'Product Added Successfully',
                                 )));
                             break;
                           case 400:
                             EasyLoading.dismiss();
                             var data = jsonDecode(res.body);
-                            if (data["msg"] != null) {
+                            if (data["msg"]) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: Text(data["msg"].toString()),
@@ -372,7 +354,7 @@ class _EditProductWidgetState extends State<StatefulEditProductWidget> {
                             }
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
-                              content: Text("Update Failed"),
+                              content: Text("Failed to Add Product"),
                             ));
                             break;
                           case 403:
@@ -386,13 +368,13 @@ class _EditProductWidgetState extends State<StatefulEditProductWidget> {
                             EasyLoading.dismiss();
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
-                              content: Text("Update Failed"),
+                              content: Text("Failed to Add Product"),
                             ));
                             break;
                         }
                       }
                     },
-                    label: const Text('UPDATE',
+                    label: const Text('SAVE',
                         style: TextStyle(
                           height: 1.171875,
                           fontSize: 24.0,

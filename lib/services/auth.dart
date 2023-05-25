@@ -63,7 +63,7 @@ class AuthController extends GetxController {
       firestoreController.reInit(userCredential.user!.uid, userCredential.user);
       Storage.saveValueIfNull('uid', userCredential.user?.uid);
       EasyLoading.dismiss();
-      Get.to(() => const HomeScreen(errMsg: ''));
+      Get.toNamed('/home');
     } on FirebaseAuthException catch (e) {
       print('${e.message}');
       if (e.code == 'user-not-found') {

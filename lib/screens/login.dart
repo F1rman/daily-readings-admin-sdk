@@ -8,13 +8,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import '../helpers/slide_right_route.dart';
-import 'home/home.dart';
 import 'register.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key, required this.errMsg}) : super(key: key);
   final String errMsg;
-  static const String _title = 'Login';
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,7 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
   void checkIfLogined() async {
     if (auth.getUID() != null && auth.getUID() != '') {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.to(() => const HomeScreen(errMsg: '',));
+        Get.toNamed('/home');
       });
     }
   }

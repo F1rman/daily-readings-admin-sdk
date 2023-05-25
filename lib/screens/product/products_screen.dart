@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
-import '../helpers/slide_right_route.dart';
-import '../models/products.dart';
-import '../services/api_service.dart';
-import '../widgets/product_list_widget.dart';
+import '../../helpers/slide_right_route.dart';
+import '../../models/products.dart';
+import '../../services/api_service.dart';
+import '../../widgets/product_list_widget.dart';
 import 'add_product_screen.dart';
-import 'home/home.dart';
-import 'login.dart';
+import '../home/home.dart';
+import '../login.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key, required this.errMsg}) : super(key: key);

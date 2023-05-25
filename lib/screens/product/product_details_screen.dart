@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:daily_readings_admin_sdk/screens/products_screen.dart';
+import 'package:daily_readings_admin_sdk/screens/product/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
-import '../helpers/slide_right_route.dart';
-import '../models/products.dart';
-import '../services/api_service.dart';
+import '../../helpers/slide_right_route.dart';
+import '../../models/products.dart';
+import '../../services/api_service.dart';
 import 'edit_product_screen.dart';
 
 class ProductDetailsScreen extends StatelessWidget {

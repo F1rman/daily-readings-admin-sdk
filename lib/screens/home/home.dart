@@ -1,4 +1,4 @@
-import 'package:daily_readings_admin_sdk/screens/products_screen.dart';
+import 'package:daily_readings_admin_sdk/screens/product/products_screen.dart';
 import 'package:daily_readings_admin_sdk/screens/roles_screen.dart';
 import 'package:daily_readings_admin_sdk/screens/users/users_screen.dart';
 import 'package:daily_readings_admin_sdk/services/auth.dart';
@@ -13,7 +13,6 @@ import '../login.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key, required this.errMsg}) : super(key: key);
   final String errMsg;
-  static const String _title = 'Home';
 
   @override
   Widget build(BuildContext context) {
@@ -208,9 +207,7 @@ class _StatefulHomeWidget extends State<StatefulHomeWidget> {
                   ),
                   onTap: () async {
                     await auth.logOut();
-                    Get.offAll(() => const LoginScreen(
-                          errMsg: 'User logged out',
-                        ));
+                    Get.offAllNamed('/');
                   },
                 ),
               ),
