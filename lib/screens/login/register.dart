@@ -1,4 +1,3 @@
-
 import 'package:daily_readings_admin_sdk/services/auth.dart';
 import 'package:daily_readings_admin_sdk/services/firestore.dart';
 import 'package:email_validator/email_validator.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
-import '../helpers/slide_right_route.dart';
+import '../../helpers/slide_right_route.dart';
 import 'login.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -276,41 +275,14 @@ class _StatefulRegisterWidget extends State<StatefulRegisterWidget> {
                         await firestore.createUser(resultUid, {
                           'email': _emailController.text,
                           'name': _nameController.text,
-                          'role': 'user',
+                          'function': 'user',
                           'uid': resultUid,
+                          'createdAt': DateTime.now().toString(),
+                          'isVerified': false,
                         });
                         Get.offAll(() => const LoginScreen(
                               errMsg: 'Registered Successfully',
                             ));
-
-                        // var res = await authService.register(
-                        //     _emailController.text, _passwordController.text, _nameController.text);
-
-                        // switch (res!.statusCode) {
-                        //   case 201:
-                        //     EasyLoading.dismiss();
-                        //     Navigator.push(
-                        //         context, SlideRightRoute(page: const LoginScreen(errMsg: 'Registered Successfully',)));
-                        //     break;
-                        //   case 400:
-                        //     EasyLoading.dismiss();
-                        //     var data = jsonDecode(res.body);
-                        //     if (data["msg"]) {
-                        //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //         content: Text(data["msg"].toString()),
-                        //       ));
-                        //     }
-                        //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        //       content: Text("Registration Failed"),
-                        //     ));
-                        //     break;
-                        //   default:
-                        //     EasyLoading.dismiss();
-                        //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        //       content: Text("Registration Failed"),
-                        //     ));
-                        //     break;
-                        // }
                       }
                     },
                     label: const Text('REGISTER',
@@ -348,12 +320,7 @@ class _StatefulRegisterWidget extends State<StatefulRegisterWidget> {
                           text: 'here ',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.push(
-                                  context,
-                                  SlideRightRoute(
-                                      page: const LoginScreen(
-                                    errMsg: '',
-                                  )));
+                              Get.toNamed('/login');
                             },
                           style: const TextStyle(
                             fontSize: 18.0,

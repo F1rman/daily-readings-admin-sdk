@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import '../helpers/slide_right_route.dart';
+import '../../helpers/slide_right_route.dart';
 import 'register.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -282,10 +282,7 @@ class _StatefulLoginWidget extends State<StatefulLoginWidget> {
                           text: 'here ',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.push(
-                                  context,
-                                  SlideRightRoute(
-                                      page: const RegisterScreen()));
+                             Get.toNamed('/register');
                             },
                           style: const TextStyle(
                             fontSize: 18.0,
